@@ -19,7 +19,8 @@
   display: flex;
   align-items: center;
   justify-content: center;
-  border-top: 1px solid rgb(211, 203, 203);
+  /* border-top: 1px solid rgb(211, 203, 203); */
+  background-color: #fff;
 }
 
 .sideMenuContent {
@@ -54,4 +55,10 @@
   height: 175px;
   border-radius: 10px;
   background: linear-gradient(to right bottom, #7848e0, #45bef1);
+}
+
+.cardFooter1{
+  padding:19px;
+  height: 175px;
+
 }

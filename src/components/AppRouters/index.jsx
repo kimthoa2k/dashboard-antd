@@ -1,10 +1,10 @@
 import React from "react";
 import { Route, Routes } from "react-router-dom";
-import Dashboard from "../../components/Pages/Dashboard";
-import Tables from "../../components/Pages/Tables";
-import Billing from "../../components/Pages/Billing";
-import Profile from "../../components/Pages/Profile";
-import Singin from "../../components/Pages/Singin";
+import Dashboard from "../Pages/Dashboard";
+import Tables from "../Pages/Tables";
+import Billing from "../Pages/Billing";
+import Profile from "../Pages/Profile";
+import Singin from "../Pages/Singin";
 
 const AppRouters = () => {
   return (

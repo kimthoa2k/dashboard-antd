@@ -292,7 +292,7 @@ function Dashboard1() {
             <small style={{ fontSize: 14, color: "#52C41A" }}>+30%</small>
           </Typography.Title>
         </Col>
-        <Col xs={6} style={{ alignSelf: "center", padding: 12 }}>
+        <Col xs={6} style={{ alignSelf: "center", padding: 8 }}>
           <DollarOutlined
             style={{
               color: "#fff",
@@ -300,7 +300,6 @@ function Dashboard1() {
               borderRadius: "6px",
               fontSize: 35,
               padding: 6,
-              margin: "0  21px",
             }}
           />
         </Col>
@@ -330,7 +329,6 @@ function Dashboard2() {
               borderRadius: "6px",
               fontSize: 35,
               padding: 6,
-              margin: "0 0 0 21px",
             }}
           />
         </Col>
@@ -360,7 +358,6 @@ function Dashboard3() {
               borderRadius: "6px",
               fontSize: 35,
               padding: 6,
-              margin: "0 0 0 21px",
             }}
           />
         </Col>
@@ -390,7 +387,6 @@ function Dashboard4() {
               borderRadius: "6px",
               fontSize: 35,
               padding: 6,
-              margin: "0 0 0 21px",
             }}
           />
         </Col>
@@ -754,7 +750,7 @@ function DashboardTimeline() {
 
 function DashboardCardFooter1() {
   return (
-    <Card bodyStyle={{ padding: "20px" }}>
+    <Card bodyStyle={{ padding: "16px" }}>
       <div className="cardFooter1">
         <span style={{ fontSize: 16, color: "#8C8C8C" }}>
           Built by developers

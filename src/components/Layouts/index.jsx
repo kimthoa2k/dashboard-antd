@@ -12,6 +12,8 @@ import { useState } from "react";
 import { AiOutlineCreditCard } from "react-icons/ai";
 import { useNavigate } from "react-router-dom";
 import AppRouters from "../AppRouters";
+import AppFooter from "../AppFooter";
+import AppHeader from "../AppHeader";
 
 const { Header, Sider, Content, Footer } = Layout;
 
@@ -70,16 +72,29 @@ const Layouts = () => {
             // background: colorBgContainer,
           }}
         >
-          <Button
-            type="text"
-            icon={collapsed ? <MenuUnfoldOutlined /> : <MenuFoldOutlined />}
-            onClick={() => setCollapsed(!collapsed)}
+          <div
             style={{
-              fontSize: "16px",
-              width: 64,
-              height: 64,
+              display: "flex",
+              justifyContent: "space-between",
+              alignItems: "center",
             }}
-          />
+          >
+            <div>
+              <Button
+                type="text"
+                icon={collapsed ? <MenuUnfoldOutlined /> : <MenuFoldOutlined />}
+                onClick={() => setCollapsed(!collapsed)}
+                style={{
+                  fontSize: "16px",
+                  width: 64,
+                  height: 64,
+                }}
+              />
+            </div>
+            <div>
+              <AppHeader />
+            </div>
+          </div>
         </Header>
         <Content
           style={{
@@ -89,7 +104,9 @@ const Layouts = () => {
         >
           <AppRouters />
         </Content>
-        <Footer className="appFooter">FOOTER</Footer>
+        <Footer className="appFooter">
+          <AppFooter />
+        </Footer>
       </Layout>
     </Layout>
   );

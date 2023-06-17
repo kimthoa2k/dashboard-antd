@@ -25,16 +25,14 @@ const Tables = () => {
     //     </Col>
     //   </Row>
     // </Space>
-    <>
-      <Row gutter={[24, 24]}>
-        <Col span={24}>
-          <TableProducts />
-        </Col>
-        <Col span={24}>
-          <TableProducts />
-        </Col>
-      </Row>
-    </>
+    <Row gutter={[24, 24]}>
+      <Col span={24}>
+        <TableProducts />
+      </Col>
+      <Col span={24}>
+        <TableProducts />
+      </Col>
+    </Row>
   );
 };
 

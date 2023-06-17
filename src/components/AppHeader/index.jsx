@@ -1,4 +1,4 @@
-import { Badge, Drawer, Image, Space, Typography } from "antd";
+import { Badge, Drawer, Typography } from "antd";
 import React, { useState } from "react";
 import { MailOutlined, SettingFilled, BellOutlined } from "@ant-design/icons";
 import Search from "antd/es/input/Search";
@@ -8,18 +8,25 @@ const AppHeader = () => {
   const [commentOpen, setCommentOpen] = useState(false);
 
   return (
-    <div className="appHeader">
-      <Image
+    <div>
+      {/* <Image
         width={50}
         src="https://pepsilan.com/wp-content/uploads/2022/02/Hinh-Gau-Truc-Cute-Chibi-de-thuong-nhat.jpg"
-      ></Image>
+      ></Image> */}
 
-      <Space>
-        <Search placeholder="Type here..." />
-        <SettingFilled style={{ fontSize: 22 }} />
+      <div
+        style={{
+          display: "flex",
+          justifyContent: "center",
+          alignItems: "center",
+          padding: "0 30px",
+        }}
+      >
+        <Search placeholder="Type here..." style={{ padding: "0 0 0 16px" }} />
+        <SettingFilled style={{ fontSize: 22, padding: "0 0 0 16px" }} />
         <Badge count={10} dot>
           <MailOutlined
-            style={{ fontSize: 22 }}
+            style={{ fontSize: 22, padding: "0 0 0 16px" }}
             onClick={() => {
               setCommentOpen(true);
             }}
@@ -27,13 +34,13 @@ const AppHeader = () => {
         </Badge>
         <Badge count={20}>
           <BellOutlined
-            style={{ fontSize: 22 }}
+            style={{ fontSize: 22, padding: "0 0 0 16px" }}
             onClick={() => {
               setNotificationOpen(true);
             }}
           />
         </Badge>
-      </Space>
+      </div>
       <Drawer
         title="Comments"
         open={commentOpen}

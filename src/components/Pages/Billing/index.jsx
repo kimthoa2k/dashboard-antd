@@ -83,7 +83,6 @@ function PaymentMethod16() {
     </Row>
   );
 }
-
 function Pay12() {
   return (
     <Card
@@ -285,7 +284,7 @@ function Pay24() {
                 alignItems: "center",
               }}
             >
-              <div style={{ padding: "0 20px" }}>
+              <div style={{ padding: "0 10px" }}>
                 <span>
                   <img
                     src="https://demos.creative-tim.com/muse-ant-design-dashboard/static/media/mastercard-logo.e1b9bed1.png"
@@ -294,7 +293,7 @@ function Pay24() {
                   ></img>
                 </span>
               </div>
-              <div style={{ padding: "0 20px" }}>
+              <div style={{ padding: "0 10px" }}>
                 <h5
                   style={{
                     fontSize: 20,
@@ -305,7 +304,7 @@ function Pay24() {
                   **** **** **** 7362
                 </h5>
               </div>
-              <EditOutlined style={{ padding: "0 20px", fontSize: 20 }} />
+              <EditOutlined style={{ padding: "0 10px", fontSize: 20 }} />
             </div>
           </Card>
         </Col>
@@ -318,14 +317,14 @@ function Pay24() {
                 alignItems: "center",
               }}
             >
-              <div style={{ padding: "0 20px" }}>
+              <div style={{ padding: "0 10px" }}>
                 <span>
                   <FaCcVisa
                     style={{ width: 50, height: 30, color: "#1890ff" }}
                   />
                 </span>
               </div>
-              <div style={{ padding: "0 20px" }}>
+              <div style={{ padding: "0 10px" }}>
                 <h5
                   style={{
                     fontSize: 20,
@@ -336,7 +335,7 @@ function Pay24() {
                   **** **** **** 3288
                 </h5>
               </div>
-              <EditOutlined style={{ padding: "0 20px", fontSize: 20 }} />
+              <EditOutlined style={{ padding: "0 10px", fontSize: 20 }} />
             </div>
           </Card>
         </Col>

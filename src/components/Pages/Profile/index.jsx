@@ -7,7 +7,6 @@ import {
   List,
   Radio,
   Row,
-  Space,
   Switch,
   Tag,
   Typography,
@@ -22,31 +21,31 @@ import {
 
 const Profile = () => {
   return (
-    <Space direction="vertical">
-      <Typography.Title level={3}>Profile</Typography.Title>
+    // <Space direction="vertical">
+    //   <Typography.Title level={3}>Profile</Typography.Title>
+    <Row gutter={[24, 24]}>
+      <Col span={24}>
+        <AvatarCard />
+      </Col>
+      {/* span8 span={24} md={8}*/}
+      <Row gutter={[24, 24]}>
+        <Col xs={24} sm={24} md={24} lg={12} xl={8}>
+          <PlatformSetting />
+        </Col>
+        <Col xs={24} sm={24} md={24} lg={12} xl={8}>
+          <ProfileInformations />
+        </Col>
+        <Col xs={24} sm={24} md={24} lg={24} xl={8}>
+          <Conversations />
+        </Col>
+      </Row>
       <Row gutter={[24, 24]}>
         <Col span={24}>
-          <AvatarCard />
+          <ProjectCards />
         </Col>
-        {/* span8 span={24} md={8}*/}
-        <Row gutter={[24, 24]}>
-          <Col xs={24} sm={24} md={24} lg={12} xl={8}>
-            <PlatformSetting />
-          </Col>
-          <Col xs={24} sm={24} md={24} lg={12} xl={8}>
-            <ProfileInformations />
-          </Col>
-          <Col xs={24} sm={24} md={24} lg={24} xl={8}>
-            <Conversations />
-          </Col>
-        </Row>
-        <Row gutter={[24, 24]}>
-          <Col span={24}>
-            <ProjectCards />
-          </Col>
-        </Row>
       </Row>
-    </Space>
+    </Row>
+    // </Space>
   );
 };
 
@@ -166,7 +165,6 @@ function PlatformSetting() {
     </Card>
   );
 }
-
 function ProfileInformations() {
   return (
     <Card
@@ -225,7 +223,6 @@ function ProfileInformations() {
     </Card>
   );
 }
-
 function Conversations() {
   const data = [
     {
@@ -508,7 +505,6 @@ function ProjectInfo2() {
     </Card>
   );
 }
-
 function ProjectInfo3() {
   return (
     <Card
@@ -596,7 +592,6 @@ function ProjectInfo3() {
     </Card>
   );
 }
-
 function ProjectInfo4() {
   return (
     <Card
