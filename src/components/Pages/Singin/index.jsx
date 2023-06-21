@@ -7,20 +7,17 @@ import {
   Form,
   Input,
   Row,
-  Space,
   Typography,
 } from "antd";
 import React from "react";
 
 const Singin = () => {
   return (
-    <Space direction="vertical">
-      <Row>
-        <Col>
-          <SinginForm />
-        </Col>
-      </Row>
-    </Space>
+    <Row>
+      <Col span={8} offset={8}>
+        <SinginForm />
+      </Col>
+    </Row>
   );
 };
 
@@ -50,8 +47,6 @@ function SinginForm() {
         style={{
           padding: 10,
           backgroundColor: "#ffff",
-          width: "400px",
-          height: "410px",
         }}
         initialValues={{ remember: true }}
         onFinish={onFinish}
