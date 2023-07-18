@@ -10,21 +10,13 @@ import {
   Modal,
   Input,
 } from "antd";
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect, useContext } from "react";
 import { getProducts } from "../../../API";
 import { DeleteOutlined, EditOutlined } from "@ant-design/icons";
+import ApiContext from "./ApiContext";
 
 const Tables = () => {
   return (
-    // <Space fontSize={20} direction="vertical">
-    //   <Typography.Title level={3}>Tables</Typography.Title>
-
-    //   <Row gutter={[24, 24]}>
-    //     <Col span={24}>
-    //       <TableProducts />
-    //     </Col>
-    //   </Row>
-    // </Space>
     <Row gutter={[24, 24]}>
       <Col span={24}>
         <TableProducts />
@@ -37,230 +29,243 @@ const Tables = () => {
 };
 
 const TableProducts = () => {
-  const [dataSource, setDataSource] = useState([]);
-  const [loading, setLoading] = useState(false);
-
-  // const memo = useMemo(() => {
-  //   return dataSource;
-  // }, [dataSource]);
+  const { state, dispatch } = useContext(ApiContext);
+  const { data, isLoading, error } = state;
 
   useEffect(() => {
-    async function fetchData() {
-      setLoading(true);
-      const product = await getProducts();
-      setDataSource(product.products);
-      setLoading(false);
-      // console.log("users", users);
-      product.products.map((item) => (item.key = item.id));
-    }
-    fetchData();
-  }, []);
-  // console.log(dataSource);
+    const fetchData = async () => {
+      dispatch({ type: "FETCH_INIT" });
+      try {
+        const product = await getProducts();
 
-  // Delete handle
-  const DeleteProduct = (record) => {
+        dispatch({ type: "FETCH_SUCCESS", payload: product.products });
+        product.products.map((item) => (item.key = item.id));
+      } catch (error) {
+        dispatch({ type: "FETCH_ERROR", payload: error.message });
+      }
+    };
+    fetchData();
+  }, [dispatch]);
+
+  const columns = [
+    {
+      title: "Image",
+      dataIndex: "thumbnail",
+      key: "thumbnail",
+      render: (link) => {
+        return <Avatar src={link} />;
+      },
+      fixed: true,
+    },
+    {
+      title: "Title",
+      dataIndex: "title",
+      key: "title",
+    },
+    {
+      title: "Brand",
+      dataIndex: "brand",
+      key: "brand",
+    },
+    {
+      title: "Category",
+      dataIndex: "category",
+      key: "category",
+    },
+    {
+      title: "Price",
+      dataIndex: "price",
+      key: "price",
+      render: (value) => <span>${value}</span>,
+      sorter: (a, b) => a.price > b.price,
+      sortDirections: ["descend"],
+    },
+    {
+      title: "Discount",
+      dataIndex: "discountPercentage",
+      key: "discountPercentage",
+      render: (value) => <span>${value}</span>,
+      sorter: (a, b) => a.discountPercentage > b.discountPercentage,
+      sortDirections: ["descend"],
+    },
+    {
+      title: "Rating",
+      dataIndex: "rating",
+      key: "rating",
+      render: (rating) => {
+        return <Rate value={rating} allowHalf disabled />;
+      },
+    },
+    {
+      title: "Stock",
+      dataIndex: "stock",
+      key: "stock",
+    },
+    {
+      title: "Action",
+      key: "action",
+      render: (record) => {
+        return (
+          <Space size="middle">
+            <EditOutlined
+              style={{ color: "black" }}
+              onClick={() => showEditModal(record)}
+            />
+            <DeleteOutlined
+              style={{ color: "red" }}
+              onClick={() => DeleteRecord(record.id)}
+            />
+          </Space>
+        );
+      },
+    },
+  ];
+
+  // handle delete record
+  const DeleteRecord = (recordId) => {
     Modal.confirm({
       title: "Are you sure you want to delete this record?",
       onOk: () => {
-        setDataSource((pre) => {
-          return pre.filter((product) => product.id !== record.id);
+        dispatch({
+          type: "DELETE_RECORD",
+          payload: recordId,
         });
       },
     });
   };
 
-  // Edit product
-  const [isVisible, setIsVisible] = useState(false);
-  const [isEditing, setIsEditing] = useState(null);
-  // const inputReft = useRef(null);
+  //handle edit record
+  const [visible, setVisible] = useState(false);
+  const [editingRecord, setEditingRecord] = useState(null);
 
-  // useEffect(() => {
-  //   if (isEditing) {
-  //     inputReft.current.focus();
-  //   }
-  // }, [isEditing]);
-
-  const EditingProduct = (record) => {
-    setIsVisible(true);
-    setIsEditing({ ...record });
+  const showEditModal = (record) => {
+    setEditingRecord(record);
+    setVisible(true);
   };
 
-  const resetEditing = () => {
-    setIsEditing(null);
-    setIsVisible(false);
+  const handleSave = (recordId) => {
+    const updatedRecord = { recordId, ...editingRecord };
+    dispatch({ type: "UPDATE_RECORD", payload: updatedRecord });
+    setVisible(false);
+    setEditingRecord(null);
   };
+
+  const handleCancel = () => {
+    setVisible(false);
+    setEditingRecord(null);
+  };
+
   return (
     <Card>
       <Typography.Title level={4}>Products This Month</Typography.Title>
       <div style={{ overflowX: "auto", alignItems: "center", height: 482 }}>
         <Table
+          style={{
+            padding: 8,
+            minWidth: 1500,
+          }}
           tableLayout="fixed"
-          columns={[
-            {
-              title: "Image",
-              dataIndex: "thumbnail",
-              key: "thumbnail",
-              render: (link) => {
-                return <Avatar src={link} />;
-              },
-              width: 110,
-            },
-            {
-              title: "Title",
-              dataIndex: "title",
-              key: "title",
-              width: 290,
-            },
-            {
-              title: "Brand",
-              dataIndex: "brand",
-              key: "brand",
-              width: 240,
-            },
-            {
-              title: "Category",
-              dataIndex: "category",
-              key: "category",
-              width: 160,
-            },
-            {
-              title: "Price",
-              dataIndex: "price",
-              key: "price",
-              width: 120,
-              render: (value) => <span>${value}</span>,
-              sorter: (a, b) => a.price > b.price,
-              sortDirections: ["descend"],
-            },
-
-            {
-              title: "Discount",
-              dataIndex: "discountPercentage",
-              key: "discountPercentage",
-              render: (value) => <span>${value}</span>,
-              sorter: (a, b) => a.discountPercentage > b.discountPercentage,
-              sortDirections: ["descend"],
-              width: 120,
-            },
-            {
-              title: "Rating",
-              dataIndex: "rating",
-              key: "rating",
-              render: (rating) => {
-                return <Rate value={rating} allowHalf disabled />;
-              },
-              width: 190,
-            },
-            {
-              title: "Stock",
-              dataIndex: "stock",
-              key: "stock",
-              width: 120,
-            },
-            {
-              title: "Action",
-              key: "action",
-              render: (record) => {
-                return (
-                  <Space size="middle">
-                    <EditOutlined
-                      style={{ color: "black" }}
-                      onClick={() => EditingProduct(record)}
-                    />
-                    <DeleteOutlined
-                      style={{ color: "red" }}
-                      onClick={() => DeleteProduct(record)}
-                    />
-                  </Space>
-                );
-              },
-            },
-          ]}
-          loading={loading}
-          dataSource={dataSource}
+          loading={isLoading}
+          error={error}
+          dataSource={data}
+          columns={columns}
           pagination={false}
         ></Table>
       </div>
 
       {/* Modal */}
       <Modal
-        title="Edit record"
-        open={isVisible}
-        onCancel={() => resetEditing()}
+        centered={true}
+        title="Edit Record"
+        open={visible}
+        onCancel={handleCancel}
         okText="Save"
-        onOk={() => {
-          setDataSource((pre) => {
-            return pre.map((product) => {
-              if (product.id === isEditing.id) {
-                return isEditing;
-              } else {
-                return product;
-              }
-            });
-          });
-          resetEditing();
-        }}
+        onOk={(values) => handleSave(editingRecord.id, values)}
       >
+        <label style={{ fontSize: 16 }}>Thumbnail</label>
+
         <Input
-          value={isEditing?.thumbnail}
+          size="large"
+          value={editingRecord?.thumbnail}
           onChange={(e) => {
-            setIsEditing((pre) => {
+            setEditingRecord((pre) => {
               return { ...pre, thumbnail: e.target.value };
             });
           }}
         />
+        <label style={{ fontSize: 16 }}>Title</label>
+
         <Input
-          value={isEditing?.title}
+          size="large"
+          value={editingRecord?.title}
           onChange={(e) => {
-            setIsEditing((pre) => {
+            setEditingRecord((pre) => {
               return { ...pre, title: e.target.value };
             });
           }}
         />
+        <label style={{ fontSize: 16 }}>Brand</label>
+
         <Input
-          value={isEditing?.brand}
+          size="large"
+          value={editingRecord?.brand}
           onChange={(e) => {
-            setIsEditing((pre) => {
+            setEditingRecord((pre) => {
               return { ...pre, brand: e.target.value };
             });
           }}
         />
+        <label style={{ fontSize: 16 }}>Category</label>
+
         <Input
-          value={isEditing?.category}
+          size="large"
+          value={editingRecord?.category}
           onChange={(e) => {
-            setIsEditing((pre) => {
+            setEditingRecord((pre) => {
               return { ...pre, category: e.target.value };
             });
           }}
         />
+        <label style={{ fontSize: 16 }}>Price</label>
+
         <Input
-          value={isEditing?.price}
+          size="large"
+          value={editingRecord?.price}
           onChange={(e) => {
-            setIsEditing((pre) => {
+            setEditingRecord((pre) => {
               return { ...pre, price: e.target.value };
             });
           }}
         />
+        <label style={{ fontSize: 16 }}>Discount</label>
+
         <Input
-          value={isEditing?.discountPercentage}
+          size="large"
+          value={editingRecord?.discountPercentage}
           onChange={(e) => {
-            setIsEditing((pre) => {
+            setEditingRecord((pre) => {
               return { ...pre, discountPercentage: e.target.value };
             });
           }}
         />
+        <label style={{ fontSize: 16 }}>Rating</label>
+
         <Input
-          value={isEditing?.rating}
+          size="large"
+          value={editingRecord?.rating}
           onChange={(e) => {
-            setIsEditing((pre) => {
+            setEditingRecord((pre) => {
               return { ...pre, rating: e.target.value };
             });
           }}
         />
+        <label style={{ fontSize: 16 }}>Stock</label>
+
         <Input
-          value={isEditing?.stock}
+          size="large"
+          value={editingRecord?.stock}
           onChange={(e) => {
-            setIsEditing((pre) => {
+            setEditingRecord((pre) => {
               return { ...pre, stock: e.target.value };
             });
           }}

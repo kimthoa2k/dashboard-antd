@@ -282,8 +282,10 @@ function Dashboard1() {
   return (
     <Card>
       <Row gutter={[24, 24]}>
-        <Col xs={18} style={{ width: 280 }}>
-          <span>Today’s Sales</span>
+        {/* style={{ width: 280 }} */}
+
+        <Col span={18}>
+          <span>Today's Sales</span>
           <Typography.Title
             level={3}
             style={{ marginBottom: 0, fontSize: 30, fontWeight: 650 }}
@@ -292,7 +294,9 @@ function Dashboard1() {
             <small style={{ fontSize: 14, color: "#52C41A" }}>+30%</small>
           </Typography.Title>
         </Col>
-        <Col xs={6} style={{ alignSelf: "center", padding: 8 }}>
+        {/* style={{ alignSelf: "center", padding: 8 }} */}
+
+        <Col span={6}>
           <DollarOutlined
             style={{
               color: "#fff",
@@ -300,6 +304,7 @@ function Dashboard1() {
               borderRadius: "6px",
               fontSize: 35,
               padding: 6,
+              margin: "8px 10px 0 0",
             }}
           />
         </Col>
@@ -311,8 +316,8 @@ function Dashboard2() {
   return (
     <Card>
       <Row gutter={[24, 24]}>
-        <Col xs={18} style={{ width: 280 }}>
-          <span>Today’s Sales</span>
+        <Col xs={18}>
+          <span>Today's Sales</span>
           <Typography.Title
             level={3}
             style={{ marginBottom: 0, fontSize: 30, fontWeight: 650 }}
@@ -321,7 +326,7 @@ function Dashboard2() {
             <small style={{ fontSize: 14, color: "#52C41A" }}>+30%</small>
           </Typography.Title>
         </Col>
-        <Col xs={6} style={{ alignSelf: "center", padding: 12 }}>
+        <Col xs={6}>
           <UserOutlined
             style={{
               color: "#fff",
@@ -329,6 +334,7 @@ function Dashboard2() {
               borderRadius: "6px",
               fontSize: 35,
               padding: 6,
+              margin: "8px 10px 0 0",
             }}
           />
         </Col>
@@ -340,8 +346,8 @@ function Dashboard3() {
   return (
     <Card>
       <Row gutter={[24, 24]}>
-        <Col xs={18} style={{ width: 280 }}>
-          <span>Today’s Sales</span>
+        <Col xs={18}>
+          <span>Today's Sales</span>
           <Typography.Title
             level={3}
             style={{ marginBottom: 0, fontSize: 30, fontWeight: 650 }}
@@ -350,7 +356,7 @@ function Dashboard3() {
             <small style={{ fontSize: 14, color: "#52C41A" }}>+30%</small>
           </Typography.Title>
         </Col>
-        <Col xs={6} style={{ alignSelf: "center", padding: 12 }}>
+        <Col xs={6}>
           <HeartOutlined
             style={{
               color: "#fff",
@@ -358,6 +364,7 @@ function Dashboard3() {
               borderRadius: "6px",
               fontSize: 35,
               padding: 6,
+              margin: "8px 10px 0 0",
             }}
           />
         </Col>
@@ -369,8 +376,8 @@ function Dashboard4() {
   return (
     <Card>
       <Row gutter={[24, 24]}>
-        <Col xs={18} style={{ width: 280 }}>
-          <span>Today’s Sales</span>
+        <Col xs={18}>
+          <span>Today's Sales</span>
           <Typography.Title
             level={3}
             style={{ marginBottom: 0, fontSize: 30, fontWeight: 650 }}
@@ -379,7 +386,7 @@ function Dashboard4() {
             <small style={{ fontSize: 14, color: "#52C41A" }}>+30%</small>
           </Typography.Title>
         </Col>
-        <Col xs={6} style={{ alignSelf: "center", padding: 12 }}>
+        <Col xs={6}>
           <LockOutlined
             style={{
               color: "#fff",
@@ -387,6 +394,7 @@ function Dashboard4() {
               borderRadius: "6px",
               fontSize: 35,
               padding: 6,
+              margin: "8px 10px 0 0",
             }}
           />
         </Col>
@@ -595,6 +603,7 @@ function DashboardTable() {
 
       {/* Modal */}
       <Modal
+        centered={true}
         title="Edit record"
         open={isVisible}
         onCancel={() => resetEditing()}
@@ -612,7 +621,9 @@ function DashboardTable() {
           resetEditing();
         }}
       >
+        <label style={{ fontSize: 16 }}>Image</label>
         <Input
+          size="large"
           value={isEditing?.image}
           onChange={(e) => {
             setIsEditing((pre) => {
@@ -620,7 +631,10 @@ function DashboardTable() {
             });
           }}
         />
+        <label style={{ fontSize: 16 }}>First name</label>
+
         <Input
+          size="large"
           value={isEditing?.firstName}
           onChange={(e) => {
             setIsEditing((pre) => {
@@ -628,7 +642,10 @@ function DashboardTable() {
             });
           }}
         />
+        <label style={{ fontSize: 16 }}>Last name</label>
+
         <Input
+          size="large"
           value={isEditing?.lastName}
           onChange={(e) => {
             setIsEditing((pre) => {
@@ -636,7 +653,10 @@ function DashboardTable() {
             });
           }}
         />
+        <label style={{ fontSize: 16 }}>Age</label>
+
         <Input
+          size="large"
           value={isEditing?.age}
           onChange={(e) => {
             setIsEditing((pre) => {
@@ -644,7 +664,10 @@ function DashboardTable() {
             });
           }}
         />
+        <label style={{ fontSize: 16 }}>Email</label>
+
         <Input
+          size="large"
           value={isEditing?.email}
           onChange={(e) => {
             setIsEditing((pre) => {
@@ -652,14 +675,39 @@ function DashboardTable() {
             });
           }}
         />
+        <label style={{ fontSize: 16 }}>Address</label>
+
         <Input
-          value={isEditing?.address}
+          size="large"
+          value={isEditing?.address.address}
           onChange={(e) => {
             setIsEditing((pre) => {
-              return { ...pre, address: e.target.value };
+              return {
+                ...pre,
+                address: {
+                  ...pre.address,
+                  address: e.target.value,
+                },
+              };
             });
           }}
-          s
+        />
+        <label style={{ fontSize: 16 }}>City</label>
+
+        <Input
+          size="large"
+          value={isEditing?.address.city}
+          onChange={(e) => {
+            setIsEditing((pre) => {
+              return {
+                ...pre,
+                address: {
+                  ...pre.address,
+                  city: e.target.value,
+                },
+              };
+            });
+          }}
         />
       </Modal>
     </Card>
